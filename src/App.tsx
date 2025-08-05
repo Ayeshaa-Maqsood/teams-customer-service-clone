@@ -5,6 +5,7 @@ import OverviewSection from "./components/OverviewSection";
 import AutonomousAgentsSection from "./components/AutonomousAgentsSection";
 import AIProTipsSection from "./components/AIProTipsSection";
 import ForresterHighlight from "./components/ForresterHighlight";
+import DynamicsPricing from "./components/DynamicsPricing";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <AutonomousAgentsSection />
       <AIProTipsSection />
       <ForresterHighlight />
+      <DynamicsPricing />
       <MicrosoftTeamsFooter />
     </div>
   );

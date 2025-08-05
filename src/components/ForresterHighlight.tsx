@@ -1,5 +1,3 @@
-import React from "react";
-
 const ForresterHighlight = () => {
   return (
     <div className="py-16 px-4">
