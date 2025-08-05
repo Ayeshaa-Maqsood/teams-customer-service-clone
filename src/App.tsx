@@ -4,6 +4,7 @@ import StickyNavigation from "./components/StickyNavigation";
 import OverviewSection from "./components/OverviewSection";
 import AutonomousAgentsSection from "./components/AutonomousAgentsSection";
 import AIProTipsSection from "./components/AIProTipsSection";
+import ForresterHighlight from "./components/ForresterHighlight";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <OverviewSection />
       <AutonomousAgentsSection />
       <AIProTipsSection />
+      <ForresterHighlight />
       <MicrosoftTeamsFooter />
     </div>
   );
