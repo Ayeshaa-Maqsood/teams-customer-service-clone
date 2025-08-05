@@ -8,6 +8,7 @@ import ForresterHighlight from "./components/ForresterHighlight";
 import DynamicsPricing from "./components/DynamicsPricing";
 import MicrosoftPartners from "./components/MicrosoftPartners";
 import CustomerStories from "./components/CustomerStories";
+import NextSteps from "./components/NextSteps";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <DynamicsPricing />
       <MicrosoftPartners />
       <CustomerStories />
+      <NextSteps />
       <MicrosoftTeamsFooter />
     </div>
   );
