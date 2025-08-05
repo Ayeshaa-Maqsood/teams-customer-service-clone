@@ -3,6 +3,7 @@ import MicrosoftTeamsFooter from "./components/MicrosoftTeamsFooter";
 import StickyNavigation from "./components/StickyNavigation";
 import OverviewSection from "./components/OverviewSection";
 import AutonomousAgentsSection from "./components/AutonomousAgentsSection";
+import AIProTipsSection from "./components/AIProTipsSection";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <StickyNavigation />
       <OverviewSection />
       <AutonomousAgentsSection />
+      <AIProTipsSection />
       <MicrosoftTeamsFooter />
     </div>
   );
