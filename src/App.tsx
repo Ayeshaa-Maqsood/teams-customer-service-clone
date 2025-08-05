@@ -10,6 +10,7 @@ import MicrosoftPartners from "./components/MicrosoftPartners";
 import CustomerStories from "./components/CustomerStories";
 import NextSteps from "./components/NextSteps";
 import Footnotes from "./components/Footnotes";
+import StickyContact from "./components/StickyContact";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <CustomerStories />
       <NextSteps />
       <Footnotes />
+      <StickyContact />
       <MicrosoftTeamsFooter />
     </div>
   );
