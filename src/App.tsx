@@ -9,6 +9,7 @@ import DynamicsPricing from "./components/DynamicsPricing";
 import MicrosoftPartners from "./components/MicrosoftPartners";
 import CustomerStories from "./components/CustomerStories";
 import NextSteps from "./components/NextSteps";
+import Footnotes from "./components/Footnotes";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <MicrosoftPartners />
       <CustomerStories />
       <NextSteps />
+      <Footnotes />
       <MicrosoftTeamsFooter />
     </div>
   );
