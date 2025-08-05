@@ -2,6 +2,7 @@ import TeamsHero from "./components/TeamsHero";
 import MicrosoftTeamsFooter from "./components/MicrosoftTeamsFooter";
 import StickyNavigation from "./components/StickyNavigation";
 import OverviewSection from "./components/OverviewSection";
+import AutonomousAgentsSection from "./components/AutonomousAgentsSection";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <TeamsHero />
       <StickyNavigation />
       <OverviewSection />
+      <AutonomousAgentsSection />
       <MicrosoftTeamsFooter />
     </div>
   );
