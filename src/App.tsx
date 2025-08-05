@@ -7,6 +7,7 @@ import AIProTipsSection from "./components/AIProTipsSection";
 import ForresterHighlight from "./components/ForresterHighlight";
 import DynamicsPricing from "./components/DynamicsPricing";
 import MicrosoftPartners from "./components/MicrosoftPartners";
+import CustomerStories from "./components/CustomerStories";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <ForresterHighlight />
       <DynamicsPricing />
       <MicrosoftPartners />
+      <CustomerStories />
       <MicrosoftTeamsFooter />
     </div>
   );

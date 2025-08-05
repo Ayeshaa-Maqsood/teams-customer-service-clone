@@ -5,14 +5,10 @@ import caseStudyThumbnail from "../images/CaseStudy.avif";
 import lenovoLogo from "../images/lenovo.avif";
 
 const CustomerStories = () => {
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const handlePlayVideo = () => {
-    setIsVideoModalOpen(true);
-  };
-
-  const closeVideoModal = () => {
-    setIsVideoModalOpen(false);
+    setIsVideoPlaying(true);
   };
 
   return (
@@ -88,60 +84,47 @@ const CustomerStories = () => {
 
             {/* Video/Image Section */}
             <div className="relative bg-gray-100">
-              <div className="relative h-full min-h-[400px]">
-                <img
-                  src={caseStudyThumbnail}
-                  alt="Lenovo case study video thumbnail"
-                  className="w-full h-full object-cover"
-                />
-                <button
-                  onClick={handlePlayVideo}
-                  className="absolute inset-0 flex items-center justify-center group"
-                >
-                  <div className="bg-blue-600 hover:bg-blue-700 rounded-full p-6 transition-colors duration-200 group-hover:scale-110 transform">
-                    <Play className="w-8 h-8 text-white ml-1" fill="white" />
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Video Modal */}
-        {isVideoModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-            <div className="relative max-w-4xl w-full mx-4">
-              <button
-                onClick={closeVideoModal}
-                className="absolute -top-12 right-0 text-white hover:text-gray-300 text-2xl font-bold"
-              >
-                ✕
-              </button>
-              <div className="bg-black rounded-lg overflow-hidden">
-                {/* Video player will go here - commented out for now */}
-                {/* 
-                <video 
-                  controls 
-                  autoPlay 
-                  className="w-full h-auto"
-                  src="/path/to/your/video.mp4"
-                >
-                  Your browser does not support the video tag.
-                </video> 
-                */}
-                <div className="aspect-video flex items-center justify-center bg-gray-900 text-white">
-                  <div className="text-center">
-                    <p className="text-xl mb-4">Video Player Modal</p>
+              {!isVideoPlaying ? (
+                <div className="relative h-full min-h-[400px]">
+                  <img
+                    src={caseStudyThumbnail}
+                    alt="Lenovo case study video thumbnail"
+                    className="w-full h-full object-cover"
+                  />
+                  <button
+                    onClick={handlePlayVideo}
+                    className="absolute inset-0 flex items-center justify-center group"
+                  >
+                    <div className="bg-blue-600 hover:bg-blue-700 rounded-full p-6 transition-colors duration-200 group-hover:scale-110 transform">
+                      <Play className="w-8 h-8 text-white ml-1" fill="white" />
+                    </div>
+                  </button>
+                </div>
+              ) : (
+                <div className="h-full min-h-[400px] flex items-center justify-center bg-black">
+                  {/* Video player will go here - commented out for now */}
+                  {/* 
+                  <video 
+                    controls 
+                    autoPlay 
+                    className="w-full h-full"
+                    src="/path/to/your/video.mp4"
+                  >
+                    Your browser does not support the video tag.
+                  </video> 
+                  */}
+                  <div className="text-white text-center">
+                    <p className="text-xl mb-4">Video Player Placeholder</p>
                     <p className="text-gray-300">
                       Video will be loaded here when you uncomment the video
                       code
                     </p>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
