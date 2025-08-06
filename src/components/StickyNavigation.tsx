@@ -68,8 +68,7 @@ const StickyNavigation = () => {
       const navHeight = 100;
       const scrollPosition = window.scrollY + navHeight;
 
-      // Find the current section
-      let currentSection = sections[0].id; // default to first section
+      let currentSection = null; // Don't default to any section
 
       for (let i = 0; i < sections.length; i++) {
         const section = document.getElementById(sections[i].element);
@@ -84,7 +83,9 @@ const StickyNavigation = () => {
         }
       }
 
-      if (currentSection !== activeTab) {
+      // Only update activeTab if we found a valid section
+      // This prevents switching to overview when scrolling through sections without IDs
+      if (currentSection !== null && currentSection !== activeTab) {
         setActiveTab(currentSection);
       }
     };
