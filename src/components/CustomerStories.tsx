@@ -1,14 +1,19 @@
 import { useState } from "react";
-import { Play } from "lucide-react";
+import { Play, X } from "lucide-react";
 import customerStoriesBg from "../images/CustomerStories-BG.avif";
 import caseStudyThumbnail from "../images/CaseStudy.avif";
 import lenovoLogo from "../images/lenovo.avif";
+import lenovoCaseStudyVideo from "../images/videoplayback.mp4";
 
 const CustomerStories = () => {
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   const handlePlayVideo = () => {
-    setIsVideoPlaying(true);
+    setIsVideoModalOpen(true);
+  };
+
+  const handleCloseVideo = () => {
+    setIsVideoModalOpen(false);
   };
 
   return (
@@ -85,48 +90,56 @@ const CustomerStories = () => {
 
             {/* Video/Image Section */}
             <div className="relative bg-gray-100">
-              {!isVideoPlaying ? (
-                <div className="relative h-full min-h-[400px]">
-                  <img
-                    src={caseStudyThumbnail}
-                    alt="Lenovo case study video thumbnail"
-                    className="w-full h-full object-cover"
-                  />
-                  <button
-                    onClick={handlePlayVideo}
-                    className="absolute inset-0 flex items-center justify-center group"
-                  >
-                    <div className="bg-blue-600 hover:bg-blue-700 rounded-full p-6 transition-colors duration-200 group-hover:scale-110 transform">
-                      <Play className="w-8 h-8 text-white ml-1" fill="white" />
-                    </div>
-                  </button>
-                </div>
-              ) : (
-                <div className="h-full min-h-[400px] flex items-center justify-center bg-black">
-                  {/* Video player will go here - commented out for now */}
-                  {/* 
-                  <video 
-                    controls 
-                    autoPlay 
-                    className="w-full h-full"
-                    src="/path/to/your/video.mp4"
-                  >
-                    Your browser does not support the video tag.
-                  </video> 
-                  */}
-                  <div className="text-white text-center">
-                    <p className="text-xl mb-4">Video Player Placeholder</p>
-                    <p className="text-gray-300">
-                      Video will be loaded here when you uncomment the video
-                      code
-                    </p>
+              <div className="relative h-full min-h-[400px]">
+                <img
+                  src={caseStudyThumbnail}
+                  alt="Lenovo case study video thumbnail"
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  onClick={handlePlayVideo}
+                  className="absolute inset-0 flex items-center justify-center group"
+                >
+                  <div className="bg-blue-600 hover:bg-blue-700 rounded-full p-6 transition-colors duration-200 group-hover:scale-110 transform">
+                    <Play className="w-8 h-8 text-white ml-1" fill="white" />
                   </div>
-                </div>
-              )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* ✅ Video Modal */}
+      {isVideoModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center overflow-y-auto"
+          onClick={handleCloseVideo}
+        >
+          <div
+            className="relative w-full max-w-4xl mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={handleCloseVideo}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 z-10"
+            >
+              <X size={32} />
+            </button>
+            {/* Video Player */}
+            <div className="rounded-2xl overflow-hidden flex items-center justify-center">
+              <video
+                src={lenovoCaseStudyVideo}
+                autoPlay
+                controls
+                className="w-full h-auto max-h-[90vh] aspect-video"
+                onEnded={handleCloseVideo}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

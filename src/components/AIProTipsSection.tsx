@@ -1,20 +1,8 @@
-import React, { useState } from "react";
-import {
-  Box,
-  VStack,
-  Text,
-  Image,
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalCloseButton,
-  useBreakpointValue,
-} from "@chakra-ui/react";
-import { FaPlay } from "react-icons/fa";
+import { useState } from "react";
+import { Play, X } from "lucide-react";
 import backgroundImage from "../images/ProductDemo -BG.avif";
 import videoThumbnail from "../images/InteractiveDemo-thumbnail.avif";
-// import demoVideo from "../videos/demo-video.mp4";
+import videoPlayback from "../images/videoplayback.mp4";
 
 const AIProTipsSection = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
@@ -22,123 +10,85 @@ const AIProTipsSection = () => {
   const handlePlayVideo = () => setIsVideoModalOpen(true);
   const handleCloseVideo = () => setIsVideoModalOpen(false);
 
-  const playButtonSize = useBreakpointValue({ base: "60px", md: "72px" });
-
   return (
-    <Box
+    <div
       id="product-demo-section"
-      minH="100vh"
-      py={16}
-      px={6}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      bgImage={`url(${backgroundImage})`}
-      bgSize="cover"
-      bgPosition="center"
-      bgRepeat="no-repeat"
+      className="min-h-screen py-16 px-6 flex items-center justify-center bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <VStack spacing={12} maxW="6xl" mx="auto" textAlign="center">
-        {/* Header Section */}
-        <VStack spacing={4}>
-          <Text
-            fontSize="sm"
-            color="gray.600"
-            fontWeight="medium"
-            letterSpacing="wider"
-          >
-            PRODUCT DEMO
-          </Text>
-          <Text
-            fontSize={{ base: "3xl", md: "4xl" }}
-            fontWeight="bold"
-            color="gray.800"
-            maxW="4xl"
-          >
-            AI Pro Tips series
-          </Text>
-          <Text fontSize="lg" color="gray.600" maxW="4xl" lineHeight="tall">
-            Meet Copilot, your everyday AI companion that works wherever you do.
-            Service representatives now have an AI assistant to help them ramp
-            up, solve complex issues faster, and free up more time to build
-            relationships with customers.
-          </Text>
-        </VStack>
+      <div className="max-w-6xl mx-auto text-center">
+        <div className="space-y-12">
+          {/* Header Section */}
+          <div className="space-y-4">
+            <p className="text-sm text-gray-600 font-medium tracking-wider uppercase">
+              PRODUCT DEMO
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 max-w-4xl mx-auto">
+              AI Pro Tips series
+            </h2>
+            <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Meet Copilot, your everyday AI companion that works wherever you
+              do. Service representatives now have an AI assistant to help them
+              ramp up, solve complex issues faster, and free up more time to
+              build relationships with customers.
+            </p>
+          </div>
 
-        {/* Video Thumbnail with Play Button */}
-        <Box
-          position="relative"
-          borderRadius="2xl"
-          overflow="hidden"
-          boxShadow="2xl"
-          maxW="800px"
-        >
-          <Image
-            src={videoThumbnail}
-            alt="AI Demo Thumbnail"
-            cursor="pointer"
-            onClick={handlePlayVideo}
-            transition="transform 0.3s"
-            _hover={{ transform: "scale(1.03)" }}
-          />
-          <Button
-            onClick={handlePlayVideo}
-            position="absolute"
-            top="0"
-            left="0"
-            w="100%"
-            h="100%"
-            bg="blackAlpha.300"
-            _hover={{ bg: "blackAlpha.400" }}
-            variant="ghost"
-            borderRadius="0"
-          >
-            <Box
-              w={playButtonSize}
-              h={playButtonSize}
-              bg="white"
-              borderRadius="full"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              boxShadow="lg"
-              transition="transform 0.2s"
-              _hover={{ transform: "scale(1.1)" }}
+          {/* Video Thumbnail with Play Button */}
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl max-w-4xl mx-auto">
+            <img
+              src={videoThumbnail}
+              alt="AI Demo Thumbnail"
+              className="w-full cursor-pointer transition-transform duration-300 hover:scale-105"
+              onClick={handlePlayVideo}
+            />
+            <button
+              onClick={handlePlayVideo}
+              className="absolute inset-0 w-full h-full bg-black bg-opacity-30 hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center"
             >
-              <FaPlay
-                color="gray.800"
-                size="20px"
-                style={{ marginLeft: "2px" }}
-              />
-            </Box>
-          </Button>
-        </Box>
-      </VStack>
+              <div className="w-16 md:w-20 h-16 md:h-20 bg-white rounded-full flex items-center justify-center shadow-lg transition-transform duration-200 hover:scale-110">
+                <Play
+                  className="text-gray-800 ml-1"
+                  size={20}
+                  fill="currentColor"
+                />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Video Modal */}
-      <Modal
-        isOpen={isVideoModalOpen}
-        onClose={handleCloseVideo}
-        size="6xl"
-        isCentered
-      >
-        <ModalOverlay bg="blackAlpha.800" />
-        <ModalContent bg="transparent" boxShadow="none">
-          <ModalCloseButton color="white" size="lg" />
-          <Box borderRadius="2xl" overflow="hidden">
-            <video
-              width="100%"
-              height="auto"
-              autoPlay
-              controls
-              // src={demoVideo}
+      {isVideoModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center overflow-y-auto"
+          onClick={handleCloseVideo}
+        >
+          <div
+            className="relative w-full max-w-4xl mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={handleCloseVideo}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 z-10"
             >
-              Your browser does not support the video tag.
-            </video>
-          </Box>
-        </ModalContent>
-      </Modal>
-    </Box>
+              <X size={32} />
+            </button>
+            {/* Video Player */}
+            <div className="rounded-2xl overflow-hidden flex items-center justify-center">
+              <video
+                src={videoPlayback}
+                autoPlay
+                controls
+                className="w-full h-auto max-h-[90vh] aspect-video"
+                onEnded={handleCloseVideo}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

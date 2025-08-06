@@ -1,308 +1,135 @@
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  Text,
-  Heading,
-  VStack,
-  HStack,
-  Container,
-} from "@chakra-ui/react";
-import { FaPlay } from "react-icons/fa";
+import { Play, X } from "lucide-react";
 
 import backgroundImage from "../images/agents-bg-Banner.avif";
 import thumbnailImage from "../images/combined-agents_tbmnl.avif";
+import videoPlayback from "../images/videoplayback.mp4";
 
 const AutonomousAgentsSection = () => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const handlePlayVideo = () => {
     setIsVideoPlaying(true);
-    // Add your video play logic here
-    console.log("Playing video...");
   };
 
   return (
-    <Box
+    <div
       id="agents-section"
-      minH="100vh"
-      position="relative"
-      overflow="hidden"
-      backgroundImage={`url(${backgroundImage})`}
-      backgroundSize="cover"
-      backgroundPosition="center"
-      display="flex"
-      alignItems="center"
+      className="min-h-screen relative overflow-hidden bg-cover bg-center flex items-center"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+      }}
     >
       {/* Background Overlay */}
-      <Box
-        position="absolute"
-        top="0"
-        left="0"
-        right="0"
-        bottom="0"
-        bg="rgba(26, 54, 93, 0.3)"
-        zIndex="1"
-      />
+      <div className="absolute inset-0 bg-blue-900 bg-opacity-30 z-10"></div>
 
-      <Container maxW="7xl" position="relative" zIndex="2">
-        <HStack
-          spacing={16}
-          alignItems="center"
-          flexDirection={{ base: "column", lg: "row" }}
+      {/* Video Modal/Overlay */}
+      {isVideoPlaying && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center"
+          onClick={() => setIsVideoPlaying(false)}
         >
+          <div
+            className="relative w-full max-w-4xl mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setIsVideoPlaying(false)}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 z-10"
+            >
+              <X size={32} />
+            </button>
+            {/* Video Player */}
+            <video
+              src={videoPlayback}
+              autoPlay
+              controls
+              className="w-full aspect-video rounded-lg"
+              onEnded={() => setIsVideoPlaying(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+        <div className="flex flex-col lg:flex-row items-center gap-16">
           {/* Left Side - Video Thumbnail */}
-          <Box flex="1" position="relative">
-            <Box
-              position="relative"
-              borderRadius="xl"
-              overflow="hidden"
-              boxShadow="2xl"
-              cursor="pointer"
+          <div className="flex-1 relative">
+            <div
+              className="relative rounded-xl overflow-hidden shadow-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-3xl"
               onClick={handlePlayVideo}
-              transform="perspective(1000px) rotateY(-5deg)"
-              transition="all 0.3s ease"
-              _hover={{
-                transform: "perspective(1000px) rotateY(-2deg) scale(1.02)",
-                boxShadow: "3xl",
+              style={{
+                transform: "perspective(1000px) rotateY(-5deg)",
               }}
             >
               {/* Laptop Frame */}
-              <Box bg="gray.800" p="2" borderRadius="xl" position="relative">
+              <div className="bg-gray-800 p-2 rounded-xl relative">
                 {/* Screen */}
-                <Box
-                  bg="white"
-                  borderRadius="lg"
-                  overflow="hidden"
-                  position="relative"
-                  aspectRatio="16/10"
-                  backgroundImage={`url(${thumbnailImage})`}
-                  backgroundSize="cover"
-                  backgroundPosition="center"
+                <div
+                  className="bg-white rounded-lg overflow-hidden relative aspect-video bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url(${thumbnailImage})`,
+                    aspectRatio: "16/10",
+                  }}
                 >
-                  {/* Video placeholder content */}
-                  {/* <VStack
-                    spacing={4}
-                    p={8}
-                    h="full"
-                    justify="center"
-                    align="flex-start"
-                  >
-                    <Text fontSize="sm" color="blue.600" fontWeight="semibold">
-                      Dynamics 365
-                    </Text>
-                    <VStack spacing={2} align="flex-start">
-                      <Text color="blue.700" fontWeight="bold" fontSize="lg">
-                        Case Management Agent
-                      </Text>
-                      <Text color="blue.700" fontWeight="bold" fontSize="lg">
-                        Customer Intent Agent
-                      </Text>
-                      <Text color="blue.700" fontWeight="bold" fontSize="lg">
-                        Customer Knowledge
-                      </Text>
-                      <Text color="blue.700" fontWeight="bold" fontSize="lg">
-                        Management Agent
-                      </Text>
-                    </VStack>
-                  </VStack> */}
-
                   {/* Mock interface elements on the right */}
-                  <Box
-                    position="absolute"
-                    right="4"
-                    top="4"
-                    bottom="4"
-                    width="60%"
-                    bg="white"
-                    borderRadius="md"
-                    p="4"
-                    boxShadow="sm"
-                  >
+                  <div className="absolute right-4 top-4 bottom-4 w-3/5 bg-white rounded-md p-4 shadow-sm">
                     {/* Mock interface content */}
-                    <VStack spacing={2} align="stretch">
-                      <Box h="2" bg="gray.200" borderRadius="sm" />
-                      <Box h="2" bg="gray.200" borderRadius="sm" width="80%" />
-                      <Box h="2" bg="gray.200" borderRadius="sm" width="60%" />
-                      <Box h="4" bg="red.100" borderRadius="sm" mt="4" />
-                      <Box h="2" bg="gray.200" borderRadius="sm" />
-                      <Box h="2" bg="gray.200" borderRadius="sm" width="90%" />
-                    </VStack>
-                  </Box>
+                    <div className="space-y-2">
+                      <div className="h-2 bg-gray-200 rounded-sm"></div>
+                      <div className="h-2 bg-gray-200 rounded-sm w-4/5"></div>
+                      <div className="h-2 bg-gray-200 rounded-sm w-3/5"></div>
+                      <div className="h-4 bg-red-100 rounded-sm mt-4"></div>
+                      <div className="h-2 bg-gray-200 rounded-sm"></div>
+                      <div className="h-2 bg-gray-200 rounded-sm w-9/10"></div>
+                    </div>
+                  </div>
 
                   {/* Play Button Overlay */}
-                  <Box
-                    position="absolute"
-                    top="50%"
-                    left="50%"
-                    transform="translate(-50%, -50%)"
-                    bg="rgba(0, 0, 0, 0.7)"
-                    borderRadius="full"
-                    p="4"
-                    transition="all 0.3s ease"
-                    _hover={{
-                      bg: "rgba(0, 0, 0, 0.8)",
-                      transform: "translate(-50%, -50%) scale(1.1)",
-                    }}
-                  >
-                    <FaPlay color="white" size="24" />
-                  </Box>
-                </Box>
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-70 rounded-full p-4 transition-all duration-300 hover:bg-opacity-80 hover:scale-110">
+                    <Play className="text-white" size={24} fill="white" />
+                  </div>
+                </div>
 
                 {/* Laptop bottom */}
-                <Box h="3" bg="gray.700" mt="1" borderBottomRadius="xl" />
-              </Box>
-            </Box>
-          </Box>
+                <div className="h-3 bg-gray-700 mt-1 rounded-b-xl"></div>
+              </div>
+            </div>
+          </div>
 
           {/* Right Side - Content */}
-          <Box flex="1" color="white">
-            <VStack spacing={6} align="flex-start">
-              <Text
-                fontSize="sm"
-                fontWeight="semibold"
-                color="blue.200"
-                textTransform="uppercase"
-                letterSpacing="wider"
-              >
+          <div className="flex-1 text-white">
+            <div className="space-y-6">
+              <p className="text-sm font-semibold text-blue-200 uppercase tracking-wider">
                 Agents (Preview)
-              </Text>
+              </p>
 
-              <Heading
-                fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
-                fontWeight="bold"
-                lineHeight="1.2"
-                color="white"
-              >
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white">
                 Transform service with autonomous agents
-              </Heading>
+              </h2>
 
-              <Text
-                fontSize={{ base: "md", lg: "lg" }}
-                color="blue.100"
-                lineHeight="1.7"
-                maxW="500px"
-              >
+              <p className="text-base lg:text-lg text-blue-100 leading-relaxed max-w-lg">
                 Discover how AI service agents for Dynamics 365 can learn to
                 address emerging issues, uncover new knowledge, and automate
                 manual processes to boost business efficiency and reduce costs.
                 Now available in public preview.
-              </Text>
+              </p>
 
-              <HStack spacing={4} pt={4}>
-                <Button
-                  bg="white"
-                  color="blue.800"
-                  size="lg"
-                  fontWeight="semibold"
-                  px={8}
-                  py={6}
-                  borderRadius="md"
-                  _hover={{
-                    bg: "blue.50",
-                    transform: "translateY(-2px)",
-                    boxShadow: "lg",
-                  }}
-                  transition="all 0.3s ease"
-                >
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <button className="bg-white text-blue-800 px-8 py-3 rounded-md font-semibold text-lg hover:bg-blue-50 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300">
                   Read the blog
-                </Button>
+                </button>
 
-                <Button
-                  variant="outline"
-                  borderColor="blue.300"
-                  color="white"
-                  size="lg"
-                  fontWeight="semibold"
-                  px={8}
-                  py={6}
-                  borderRadius="md"
-                  _hover={{
-                    bg: "rgba(255, 255, 255, 0.1)",
-                    borderColor: "white",
-                    transform: "translateY(-2px)",
-                  }}
-                  transition="all 0.3s ease"
-                >
+                <button className="border-2 border-blue-300 text-white px-8 py-3 rounded-md font-semibold text-lg hover:bg-white hover:bg-opacity-10 hover:border-white hover:-translate-y-0.5 transition-all duration-300">
                   Learn how to get started
-                </Button>
-              </HStack>
-            </VStack>
-          </Box>
-        </HStack>
-      </Container>
-
-      {/* Video Modal/Overlay (when video is playing) */}
-      {isVideoPlaying && (
-        <Box
-          position="fixed"
-          top="0"
-          left="0"
-          right="0"
-          bottom="0"
-          bg="rgba(0, 0, 0, 0.9)"
-          zIndex="999"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          onClick={() => setIsVideoPlaying(false)}
-        >
-          {/* Video Player Container */}
-          <Box
-            position="relative"
-            width="90%"
-            maxW="800px"
-            aspectRatio="16/9"
-            bg="black"
-            borderRadius="lg"
-            overflow="hidden"
-          >
-            {/* Replace this with your actual video component */}
-            {/* <video
-              width="100%"
-              height="100%"
-              controls
-              autoPlay
-              src="path-to-your-video.mp4"
-            >
-              Your browser does not support the video tag.
-            </video> */}
-
-            {/* Placeholder for video */}
-            <Box
-              w="full"
-              h="full"
-              bg="black"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              color="white"
-              fontSize="xl"
-            >
-              Video Player Placeholder
-              <br />
-              (Replace with actual video component)
-            </Box>
-
-            {/* Close button */}
-            <Button
-              position="absolute"
-              top="4"
-              right="4"
-              size="sm"
-              variant="ghost"
-              color="white"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsVideoPlaying(false);
-              }}
-            >
-              ✕
-            </Button>
-          </Box>
-        </Box>
-      )}
-    </Box>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
