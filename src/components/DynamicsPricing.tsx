@@ -1,4 +1,4 @@
-import pricingBg from "../images/pricing-BG.avif";
+import pricingBg from "../images/Pricing-BG.avif";
 
 const DynamicsPricing = () => {
   return (
