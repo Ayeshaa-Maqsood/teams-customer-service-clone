@@ -26,6 +26,7 @@ const AIProTipsSection = () => {
 
   return (
     <Box
+      id="product-demo-section"
       minH="100vh"
       py={16}
       px={6}

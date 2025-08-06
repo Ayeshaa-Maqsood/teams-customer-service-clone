@@ -13,6 +13,7 @@ const CustomerStories = () => {
 
   return (
     <div
+      id="customer-stories-section"
       className="py-20 px-4 relative"
       style={{
         backgroundImage: `url(${customerStoriesBg})`,

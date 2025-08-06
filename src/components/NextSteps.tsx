@@ -5,6 +5,7 @@ import ctaImage from "../images/Next-steps-CTA.avif";
 const NextSteps = () => {
   return (
     <div
+      id="next-steps-section"
       className="py-20 px-4 relative"
       style={{
         backgroundImage: `url(${nextStepsBg})`,

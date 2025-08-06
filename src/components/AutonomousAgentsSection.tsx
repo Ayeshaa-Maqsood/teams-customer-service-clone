@@ -24,6 +24,7 @@ const AutonomousAgentsSection = () => {
 
   return (
     <Box
+      id="agents-section"
       minH="100vh"
       position="relative"
       overflow="hidden"

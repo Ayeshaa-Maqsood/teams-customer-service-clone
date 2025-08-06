@@ -1,20 +1,26 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 
+interface TabsRef {
+  [key: string]: HTMLButtonElement | null;
+}
+
 const StickyNavigation = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [underlineStyle, setUnderlineStyle] = useState({});
-  const tabsRef = useRef({});
+  const [underlineStyle, setUnderlineStyle] = useState({
+    left: "0px",
+    width: "0px",
+  });
+  const tabsRef = useRef<TabsRef>({});
 
   const tabs = [
-    { id: "overview", label: "Overview", active: true },
+    { id: "overview", label: "Overview" },
     { id: "agents", label: "Agents" },
     { id: "demo", label: "Product demo" },
     { id: "pricing", label: "Pricing" },
     { id: "partners", label: "Partners" },
     { id: "stories", label: "Customer stories" },
-    { id: "resources", label: "Resources" },
     { id: "steps", label: "Next steps" },
   ];
 
@@ -23,21 +29,25 @@ const StickyNavigation = () => {
     const updateUnderline = () => {
       const activeButton = tabsRef.current[activeTab];
       if (activeButton) {
-        const containerRect =
-          activeButton.parentElement.getBoundingClientRect();
-        const buttonRect = activeButton.getBoundingClientRect();
+        const container = activeButton.parentElement;
+        if (container) {
+          const containerRect = container.getBoundingClientRect();
+          const buttonRect = activeButton.getBoundingClientRect();
 
-        const left = buttonRect.left - containerRect.left;
-        const width = buttonRect.width;
+          const left = buttonRect.left - containerRect.left;
+          const width = buttonRect.width;
 
-        setUnderlineStyle({
-          left: `${left}px`,
-          width: `${width}px`,
-        });
+          setUnderlineStyle({
+            left: `${left}px`,
+            width: `${width}px`,
+          });
+        }
       }
     };
 
-    updateUnderline();
+    // Small delay to ensure DOM is ready
+    setTimeout(updateUnderline, 50);
+
     window.addEventListener("resize", updateUnderline);
     return () => window.removeEventListener("resize", updateUnderline);
   }, [activeTab]);
@@ -52,65 +62,63 @@ const StickyNavigation = () => {
         { id: "pricing", element: "pricing-section" },
         { id: "partners", element: "partners-section" },
         { id: "stories", element: "customer-stories-section" },
-        { id: "resources", element: "resources-section" },
         { id: "steps", element: "next-steps-section" },
       ];
 
       const navHeight = 100;
       const scrollPosition = window.scrollY + navHeight;
 
-      for (let i = sections.length - 1; i >= 0; i--) {
+      // Find the current section
+      let currentSection = sections[0].id; // default to first section
+
+      for (let i = 0; i < sections.length; i++) {
         const section = document.getElementById(sections[i].element);
-        if (section && scrollPosition >= section.offsetTop) {
-          setActiveTab(sections[i].id);
-          break;
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionBottom = sectionTop + section.offsetHeight;
+
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            currentSection = sections[i].id;
+            break;
+          }
         }
+      }
+
+      if (currentSection !== activeTab) {
+        setActiveTab(currentSection);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [activeTab]);
 
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (sectionId: string) => {
     setActiveTab(sectionId);
 
     // Map tab IDs to actual section IDs in your components
-    const sectionMap = {
+    const sectionMap: { [key: string]: string } = {
       overview: "overview-section",
       agents: "agents-section",
       demo: "product-demo-section",
       pricing: "pricing-section",
       partners: "partners-section",
       stories: "customer-stories-section",
-      resources: "resources-section",
       steps: "next-steps-section",
     };
+
     const targetSection = document.getElementById(sectionMap[sectionId]);
     if (targetSection) {
       // Get the height of the sticky navigation
       const navHeight = 80;
+      const targetPosition = targetSection.offsetTop - navHeight;
 
-      // For the featured section, we need to scroll to where the sticky nav starts
-      // which is at the top of the featured section
-      if (sectionId === "featured") {
-        const targetPosition = targetSection.offsetTop - navHeight;
-        window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
-        });
-      } else {
-        // For other sections, scroll to the section content but account for sticky nav
-        const targetPosition = targetSection.offsetTop - navHeight;
-        window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
-        });
-      }
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
-
-  // Calculate underline position for desktop - now handled by useEffect above
 
   return (
     <div
@@ -121,10 +129,12 @@ const StickyNavigation = () => {
         <div className="flex items-center justify-between py-4">
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center relative">
-            {tabs.map((tab, index) => (
+            {tabs.map((tab) => (
               <button
                 key={tab.id}
-                ref={(el) => (tabsRef.current[tab.id] = el)}
+                ref={(el) => {
+                  tabsRef.current[tab.id] = el;
+                }}
                 onClick={() => scrollToSection(tab.id)}
                 className={`text-sm font-medium pb-2 px-4 relative transition-colors ${
                   activeTab === tab.id
@@ -182,12 +192,9 @@ const StickyNavigation = () => {
           </div>
 
           {/* Right Side Button */}
-          {/* Right Side Button */}
           <button
-            className="text-white px-6 py-2 rounded-md font-medium transition-colors ml-4"
+            className="text-white px-6 py-2 rounded-md font-medium transition-colors ml-4 hover:opacity-90"
             style={{ backgroundColor: "#2a446f" }}
-            onMouseEnter={(e) => (e.target.style.backgroundColor = "#1e3a5f")}
-            onMouseLeave={(e) => (e.target.style.backgroundColor = "#2a446f")}
           >
             Try for free
           </button>

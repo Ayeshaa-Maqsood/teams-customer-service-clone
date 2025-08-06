@@ -7,6 +7,7 @@ import fastTrackImage from "../images/Partners-card3-FastTrack-for-Dynamics.avif
 const MicrosoftPartners = () => {
   return (
     <div
+      id="partners-section"
       className="py-20 px-4 relative"
       style={{
         backgroundImage: `url(${partnersBg})`,
